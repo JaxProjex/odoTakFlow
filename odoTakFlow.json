@@ -1,0 +1,442 @@
+[
+    {
+        "id": "d4a1b9bfee315e97",
+        "type": "tab",
+        "label": "odoTakFlow",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4291870be91210dc",
+        "type": "mqtt in",
+        "z": "d4a1b9bfee315e97",
+        "name": "",
+        "topic": "tak/+",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "3c253fb0154b8530",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 790,
+        "y": 300,
+        "wires": [
+            [
+                "b2863f5ee8fd867e",
+                "b1365574158623f8"
+            ]
+        ]
+    },
+    {
+        "id": "1505332df4e2f154",
+        "type": "debug",
+        "z": "d4a1b9bfee315e97",
+        "name": "debug json",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1530,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "b2863f5ee8fd867e",
+        "type": "debug",
+        "z": "d4a1b9bfee315e97",
+        "name": "debug mqtt in",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "0cefeb6304b268f2",
+        "type": "function",
+        "z": "d4a1b9bfee315e97",
+        "name": "mqtt json (spots)",
+        "func": "\nconst short = 10000;\nconst cinco = 5 * 60 * 1000;\nconst diez = 2 * cinco;\nconst stale = new Date(Date.now() + short).toISOString();\n//cot icon colors vvv \n//\"-65536\" red\n//\"-65281\" //purple\n//\"-8947849\" //grey\n//\"-65536\" //red\n//\"-256\" //yellow\n//\"-16711936\" //green\n//\"-16776961\" //blue\n\nvar color = \"-65281\";\nvar name = \"rfid\";\nvar lat = msg.payload[\"2\"].lat\nvar lon = msg.payload[\"2\"].lon\nvar rfid = msg.payload[\"1\"].rfid;\nvar remarks = rfid\n\n\nmsg.payload = {\n    \"event\": {\n        \"_attributes\": {\n            \"version\": \"2.0\",\n            \"uid\": rfid,\n            \"type\": \"b-m-p-s-m\",\n            \"how\": \"h-g-i-g-o\",\n            \"time\": new Date(Date.now()).toISOString(),\n            \"start\": new Date(Date.now()).toISOString(),\n            \"stale\": stale,\n        },\n        \"point\": {\n            \"_attributes\": {\n                \"lat\": lat,\n                \"lon\": lon,\n                \"hae\": \"0.0\",\n                \"ce\": \"9999999.0\",\n                \"le\": \"9999999.0\"\n            }\n        },\n        \"detail\": {\n            \"usericon\": {\n                \"_attributes\": {\n                    \"iconsetpath\": \"COT_MAPPING_SPOTMAP/b-m-p-s-m/\" + color + \"\",\n                },\n            },\n            \"remarks\": {\n                \"_text\": remarks,\n            },\n            \"contact\": {\n                \"_attributes\": {\n                    \"callsign\": name,\n                }\n            },\n            \"color\": {\n                \"_attributes\": {\n                    \"argb\": color,\n                },\n            },\n        }\n    }\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1350,
+        "y": 300,
+        "wires": [
+            [
+                "1505332df4e2f154",
+                "a888d493bcf2e367"
+            ]
+        ]
+    },
+    {
+        "id": "a888d493bcf2e367",
+        "type": "tak",
+        "z": "d4a1b9bfee315e97",
+        "name": "TAK",
+        "x": 1570,
+        "y": 300,
+        "wires": [
+            [
+                "2312e498da91efdd",
+                "83daa98c3a4596e0"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ffd76640be049628",
+        "type": "mqtt out",
+        "z": "d4a1b9bfee315e97",
+        "name": "",
+        "topic": "tak/device1",
+        "qos": "2",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "3c253fb0154b8530",
+        "x": 430,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "a03dfbb366e431f4",
+        "type": "inject",
+        "z": "d4a1b9bfee315e97",
+        "name": "EXAMPLE 1",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "tak",
+        "payload": "\"test1 helloworld, HELLOWORLD\"",
+        "payloadType": "str",
+        "x": 210,
+        "y": 260,
+        "wires": [
+            [
+                "ffd76640be049628"
+            ]
+        ]
+    },
+    {
+        "id": "b9d763de251e0508",
+        "type": "mqtt out",
+        "z": "d4a1b9bfee315e97",
+        "name": "",
+        "topic": "tak/device2",
+        "qos": "2",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "3c253fb0154b8530",
+        "x": 430,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "6d374011209e851f",
+        "type": "inject",
+        "z": "d4a1b9bfee315e97",
+        "name": "EXAMPLE 2",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "tak",
+        "payload": "{\"test2\":\"helloworld\",\"TEST2\":\"HELLOWORLD\"}",
+        "payloadType": "json",
+        "x": 210,
+        "y": 320,
+        "wires": [
+            [
+                "b9d763de251e0508"
+            ]
+        ]
+    },
+    {
+        "id": "2312e498da91efdd",
+        "type": "debug",
+        "z": "d4a1b9bfee315e97",
+        "name": "debug xml",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1730,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "7adca24b8497bf24",
+        "type": "gpsd",
+        "z": "d4a1b9bfee315e97",
+        "name": "",
+        "hostname": "localhost",
+        "port": "2947",
+        "tpv": true,
+        "sky": false,
+        "info": false,
+        "device": false,
+        "gst": false,
+        "att": false,
+        "x": 810,
+        "y": 380,
+        "wires": [
+            [
+                "17b179750da9ea32"
+            ]
+        ]
+    },
+    {
+        "id": "17b179750da9ea32",
+        "type": "function",
+        "z": "d4a1b9bfee315e97",
+        "name": "filter gpsd",
+        "func": "if (parseInt(msg.payload.lat) > -90 && parseInt(msg.payload.lon) > -180){\n    msg.topic = 2;\n    return msg;\n} else {\n    return null;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 340,
+        "wires": [
+            [
+                "421ac996ee406034"
+            ]
+        ]
+    },
+    {
+        "id": "421ac996ee406034",
+        "type": "join",
+        "z": "d4a1b9bfee315e97",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 1150,
+        "y": 300,
+        "wires": [
+            [
+                "0cefeb6304b268f2",
+                "254c47e01d1044c9"
+            ]
+        ]
+    },
+    {
+        "id": "254c47e01d1044c9",
+        "type": "debug",
+        "z": "d4a1b9bfee315e97",
+        "name": "debug join",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1290,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "b1365574158623f8",
+        "type": "function",
+        "z": "d4a1b9bfee315e97",
+        "name": "filter mqtt",
+        "func": "msg.topic = 1\nvar mqttMsg = msg.payload;\n\nmsg.payload = {\n    \"rfid\": mqttMsg\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 300,
+        "wires": [
+            [
+                "421ac996ee406034"
+            ]
+        ]
+    },
+    {
+        "id": "1b2c660e464c5522",
+        "type": "function",
+        "z": "d4a1b9bfee315e97",
+        "name": "test CoT (california)",
+        "func": "\nconst short = 10000;\nconst cinco = 5 * 60 * 1000;\nconst diez = 2 * cinco;\nconst stale = new Date(Date.now() + cinco).toISOString();\n\n\nmsg.payload = {\n    \"event\": {\n        \"_attributes\": {\n            \"version\": \"2.0\",\n            \"uid\": \"1234567890\",\n            \"type\": \"a-u-G\",\n            \"how\": \"h-g-i-g-o\",\n            \"time\": new Date(Date.now()).toISOString(),\n            \"start\": new Date(Date.now()).toISOString(),\n            \"stale\": stale,\n        },\n        \"point\": {\n            \"_attributes\": {\n                \"lat\": \"38.123\",\n                \"lon\": \"-121.123\",\n                \"hae\": \"0.0\",\n                \"ce\": \"9999999.0\",\n                \"le\": \"9999999.0\"\n            }\n        },\n}\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1350,
+        "y": 400,
+        "wires": [
+            [
+                "a888d493bcf2e367"
+            ]
+        ]
+    },
+    {
+        "id": "d045136d55ae56ee",
+        "type": "inject",
+        "z": "d4a1b9bfee315e97",
+        "name": "TEST",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1170,
+        "y": 400,
+        "wires": [
+            [
+                "1b2c660e464c5522"
+            ]
+        ]
+    },
+    {
+        "id": "83daa98c3a4596e0",
+        "type": "udp out",
+        "z": "d4a1b9bfee315e97",
+        "name": "",
+        "addr": "239.2.3.1",
+        "iface": "wlan0",
+        "port": "6969",
+        "ipv": "udp4",
+        "outport": "",
+        "base64": false,
+        "multicast": "multi",
+        "x": 1790,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "c86cd573cb175bf4",
+        "type": "comment",
+        "z": "d4a1b9bfee315e97",
+        "name": "USE THIS TO TEST MULTICAST",
+        "info": "",
+        "x": 1270,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "b7910ada8cdb8ef8",
+        "type": "comment",
+        "z": "d4a1b9bfee315e97",
+        "name": "config mqtt topic and auth",
+        "info": "",
+        "x": 730,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "fb08588142884519",
+        "type": "comment",
+        "z": "d4a1b9bfee315e97",
+        "name": "USE THIS TO TEST MQTT",
+        "info": "",
+        "x": 310,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "3c253fb0154b8530",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "127.0.0.1",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
