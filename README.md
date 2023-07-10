@@ -70,6 +70,10 @@ $ sudo gpsd /dev/ttyACM0 -F /var/run/gpsd.sock
 
 $ cgps
 
+-additionally you could restart, stop or start the gpsd service if needed at any point
+
+$ sudo service gpsd restart
+
 ---------------------------------------------
 
 CONFIGURE MULTICAST ADDRESS TO INTERFACE:
