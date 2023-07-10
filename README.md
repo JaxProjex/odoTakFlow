@@ -15,6 +15,8 @@ REQUIREMENTS:
 
 -GPSD Service installed
 
+-Info on odo here: https://github.com/Red-Team-Alliance/Odo
+
 -----------------------------------------------
 
 SETUP NODE-RED:
