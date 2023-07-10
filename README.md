@@ -1,5 +1,5 @@
 # odoTakFlow
-node red flow to forward mqtt payload and rpi gps location as CoT via multicast to TAK devices
+Node-Red Flow to forward MQTT payload from odo to ATAK via multicast or TAKServer. (used in conjunction with Ampledatas node-red-contrib-tak)
 
 ![node red flow](/odoTakFlow.png?raw=true "Node Red Flow")
 
@@ -35,6 +35,12 @@ IMPORT .JSON FLOW TO NODE RED:
 
 ALTERNATIVELY..
 -you can just copy the whole "odoTakFlow.json" code from GitHub and paste it into the Node-Red Import Clipboard.
+
+--------------------------------------------------
+
+MQTT IN NODE:
+
+-configure the "mqtt in" node of the necessary subscribed topic and the authentication needed (if necessary).
 
 ---------------------------------------------------
 
