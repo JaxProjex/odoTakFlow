@@ -22,6 +22,7 @@ REQUIREMENTS:
 SETUP NODE-RED:
 
 -https://nodered.org/docs/getting-started/
+
 -options include installing node-red on your local PC, a Raspberry Pi or similar single board computer or mini PC, deploying node-red on a cloud server or virtual private server (VPS), Docker Container, or local virtual environment. After installing node-red you should be able to go to the node-red dashboard at http://*nodeRedIPaddress:1880 you may have to open appropriate ports (1880) to allow devices to access the node-red dashboard.
 
 -ensure you install the "node-red-contrib-tak" node. In Node-Red: Menu (3 horizontal lines) > Manage palette > Install > Search "node-red-contrib-tak" > Install > Install
@@ -33,9 +34,11 @@ SETUP NODE-RED:
 IMPORT .JSON FLOW TO NODE RED:
 
 -in GitHub: click on "odoTakFlow.json" > click on the download icon "Download raw file" > note where the "odoTakFlow.json" file downloaded to, default is in your Downloads folder
+
 -in Node-Red: click on menu icon (3 horizontal lines top right) > click on "Import" > click on "select a file to import" > go to Downloads folder and click on "odoTakFlow.json" > Upload > Import
 
 ALTERNATIVELY..
+
 -you can just copy the whole "odoTakFlow.json" code from GitHub and paste it into the Node-Red Import Clipboard.
 
 --------------------------------------------------
