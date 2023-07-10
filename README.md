@@ -78,23 +78,27 @@ $ sudo service gpsd restart
 
 CONFIGURE MULTICAST ADDRESS TO INTERFACE:
 
--check multicast addresses for network interfaces:
+-we need to add ATAKs multicast group 239.2.3.1 to send traffic to the appropriate network interface that is being used to host our AP
 
-$ ip maddr
+$ sudo ip route replace 239.2.3.1/32 via 192.168.42.1
 
--likely well need to add 239.2.3.1 (ATAK Multicast) to our wlan0 for our RPi AP, unless using a wificard as AP then it could be wlan1.
+-replace 192.168.42.1 with the ip address of your raspberry pi on the AP interface, you can check this using
 
-$ ip addr add 239.2.3.1/32 dev wlan0
+$ ip addr show
 
--multicast should work if multiple atak devices are connected on the RPi AP but now we need the pi to multicast a CoT and make sure it gets sent to that wlan0 traffic.
-
-$ ip route add 239.2.3.1/32 dev wlan0
-
--now we check that ATAK multicast address gets sent to our wlan interface
+-we now check to make sure that our multicast address is getting routed to our specified interface/gateway ip
 
 $ ip route get 239.2.3.1
 
--node-red RPi should now be able to send CoT via multicast to ATAK devices connected to its AP.
+-if 239.2.3.1 is getting routed to your AP interface (likely "wlan0") at your pi's AP IP address then we can add this command to start at boot since it will be wiped on the pis reboot
+
+$ sudo crontab -e
+
+- scroll down to the very bottom and add:
+
+@reboot sudo ip route replace 239.2.3.1/32 via 192.168.20.1
+
+-making sure to use your pis AP IP address
 
 
 
