@@ -99,7 +99,7 @@ $ sudo crontab -e
 
 - scroll down to the very bottom and add:
 
-@reboot sudo ip route replace 239.2.3.1/32 via 192.168.20.1
+@reboot sudo ip route replace 239.2.3.1/32 via 192.168.42.1
 
 -making sure to use your pis AP IP address
 
