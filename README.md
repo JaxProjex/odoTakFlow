@@ -93,7 +93,7 @@ $ ip addr show
 
 $ ip route get 239.2.3.1
 
--if 239.2.3.1 is getting routed to your AP interface (likely "wlan0") at your pi's AP IP address then we can add this command to start at boot since it will be wiped on the pis reboot
+-should return something like: "multicast 239.2.3.1 dev wlan0 src 192.168.42.1 uid 0 cache <mc>" if 239.2.3.1 is getting routed to your AP interface (likely "wlan0") at your pi's AP IP address then we can add this command to start at boot since it will be wiped when the pi powers down.
 
 $ sudo crontab -e
 
